@@ -117,10 +117,10 @@ jobs:
             dist/*.zip
 
   release:
-    # Run on tag push (v*) or on push to main/master so binaries get published
+    # Only create a release when pushing a version tag (e.g. v0.1.24). No release on branch push.
     if: |
-      (needs.build.result == 'success' || needs.build.result == 'failure') &&
-      (github.ref_type == 'tag' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      github.ref_type == 'tag' &&
+      (needs.build.result == 'success' || needs.build.result == 'failure')
     needs: [build]
     runs-on: ubuntu-latest
     permissions:
@@ -151,9 +151,9 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'latest' }}
-          name: ${{ github.ref_type == 'tag' && github.ref_name || 'Latest build' }}
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
           target_commitish: ${{ github.sha }}
-          generate_release_notes: ${{ github.ref_type == 'tag' }}
+          generate_release_notes: true
           files: release/*
-          make_latest: ${{ github.ref_type == 'tag' }}
+          make_latest: true
