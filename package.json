@@ -12,7 +12,7 @@
     "build:mac": "electron-builder --mac"
   },
   "keywords": ["poe", "cascade", "ethernet", "power"],
-  "author": "Argenox Technologies LLC",
+  "author": "Argenox Technologies LLC <info@argenox.com>",
   "license": "MIT",
   "copyright": "Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.",
   "build": {
