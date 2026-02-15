@@ -1,5 +1,7 @@
 # POE Cascade Calculator
 
+[![Build and test](https://github.com/argenox/poe-cascade/actions/workflows/build.yml/badge.svg)](https://github.com/argenox/poe-cascade/actions/workflows/build.yml)
+
 App to model a **Power over Ethernet (POE) cascade**: a network switch (PSE) → cable → N devices, where each device is POE-powered (PD) and can power the next (PSE). It helps you see how many devices can be chained and where power runs out.
 
 ![POE Cascade Calculator](screenshots/poe-cascade.png)

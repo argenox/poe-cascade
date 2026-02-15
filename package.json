@@ -1,6 +1,6 @@
 {
   "name": "poe-cascade",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "description": "POE cascade calculator - chain devices, cable losses, and power margin",
   "main": "main.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "electron-builder",
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac --x64 --arm64"
+    "build:mac": "electron-builder --mac --x64 --arm64",
+    "test": "node --test test/"
   },
   "keywords": ["poe", "cascade", "ethernet", "power"],
   "author": "Argenox Technologies LLC <info@argenox.com>",
