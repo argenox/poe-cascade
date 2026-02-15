@@ -44,6 +44,7 @@ jobs:
 
       - name: Get version
         id: version
+        shell: bash
         run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Build (Linux)

@@ -34,7 +34,8 @@
     "mac": {
       "target": ["dmg", "zip"],
       "icon": "build/icon.icns",
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "arch": ["x64", "arm64"]
     },
     "nsis": {
       "oneClick": false,
