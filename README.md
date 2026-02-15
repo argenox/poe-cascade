@@ -4,6 +4,8 @@
 
 Electron app to model a **Power over Ethernet (POE) cascade**: a network switch (PSE) → cable → N devices, where each device is POE-powered (PD) and can power the next (PSE). It helps you see how many devices can be chained and where power runs out.
 
+![POE Cascade Calculator](screenshots/poe-cascade.png)
+
 ## Features
 
 - **Switch (PSE)** – Set total PSE output (e.g. 15.4W af, 30W at, 60/90W bt).
