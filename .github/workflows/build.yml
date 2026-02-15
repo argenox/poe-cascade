@@ -93,8 +93,8 @@ jobs:
             dist/*.zip
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    needs: build
+    if: github.ref_type == 'tag' && (needs.build.result == 'success' || needs.build.result == 'failure')
+    needs: [build]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -106,6 +106,9 @@ jobs:
           merge-multiple: true
           path: release
 
+      - name: List downloaded artifacts
+        run: ls -la release/
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -113,3 +116,4 @@ jobs:
           name: Release ${{ github.ref_name }}
           generate_release_notes: true
           files: release/*
+          make_latest: true
