@@ -46,11 +46,14 @@ jobs:
       - name: Build (Windows)
         if: matrix.platform == 'win'
         run: npm run build:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build (macOS)
         if: matrix.platform == 'mac'
         run: npm run build:mac
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Notarization optional; uncomment and set secrets for signed builds
           # CSC_LINK: ${{ secrets.MAC_CERT_BASE64 }}
           # CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
