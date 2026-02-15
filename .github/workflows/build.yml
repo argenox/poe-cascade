@@ -73,7 +73,7 @@ jobs:
         if: matrix.platform == 'linux'
         uses: actions/upload-artifact@v4
         with:
-          name: cascade-poe-${{ steps.version.outputs.version }}-linux
+          name: poe-cascade-${{ steps.version.outputs.version }}-linux
           path: |
             dist/*.AppImage
             dist/*.deb
@@ -82,7 +82,7 @@ jobs:
         if: matrix.platform == 'win'
         uses: actions/upload-artifact@v4
         with:
-          name: cascade-poe-${{ steps.version.outputs.version }}-windows
+          name: poe-cascade-${{ steps.version.outputs.version }}-windows
           path: |
             dist/*.exe
             dist/*.msi
@@ -92,7 +92,7 @@ jobs:
         if: matrix.platform == 'mac'
         uses: actions/upload-artifact@v4
         with:
-          name: cascade-poe-${{ steps.version.outputs.version }}-macos
+          name: poe-cascade-${{ steps.version.outputs.version }}-macos
           path: |
             dist/*.dmg
             dist/*.zip
@@ -110,7 +110,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: 'cascade-poe-*'
+          pattern: 'poe-cascade-*'
           merge-multiple: true
           path: release
 
