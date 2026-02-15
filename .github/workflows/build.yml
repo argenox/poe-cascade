@@ -133,8 +133,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'latest' }}
-          name: ${{ github.ref_type == 'tag' && format('Release {0}', github.ref_name) || 'Latest build' }}
+          name: ${{ github.ref_type == 'tag' && github.ref_name || 'Latest build' }}
           target_commitish: ${{ github.sha }}
           generate_release_notes: ${{ github.ref_type == 'tag' }}
           files: release/*
-          make_latest: true
+          make_latest: ${{ github.ref_type == 'tag' }}
