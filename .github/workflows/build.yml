@@ -42,6 +42,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Get version
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
       - name: Build (Linux)
         if: matrix.platform == 'linux'
         run: npm run build:linux
@@ -68,7 +72,7 @@ jobs:
         if: matrix.platform == 'linux'
         uses: actions/upload-artifact@v4
         with:
-          name: linux-build
+          name: cascade-poe-${{ steps.version.outputs.version }}-linux
           path: |
             dist/*.AppImage
             dist/*.deb
@@ -77,7 +81,7 @@ jobs:
         if: matrix.platform == 'win'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build
+          name: cascade-poe-${{ steps.version.outputs.version }}-windows
           path: |
             dist/*.exe
             dist/*.msi
@@ -87,7 +91,7 @@ jobs:
         if: matrix.platform == 'mac'
         uses: actions/upload-artifact@v4
         with:
-          name: macos-build
+          name: cascade-poe-${{ steps.version.outputs.version }}-macos
           path: |
             dist/*.dmg
             dist/*.zip
@@ -102,7 +106,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: '*-build'
+          pattern: 'cascade-poe-*-*'
           merge-multiple: true
           path: release
 
