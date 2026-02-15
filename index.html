@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2026 Argenox Technologies LLC. All rights reserved. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';">
+  <title>POE Cascade Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>POE Cascade Calculator</h1>
+      <p class="subtitle">Chain switch → cable → devices (PD + PSE). Configure draw, efficiency, and cable to see power margin.</p>
+      <p class="app-version" id="appVersion" aria-label="Application version"></p>
+    </header>
+
+    <section class="global-config">
+      <h2>Configuration</h2>
+      <div class="global-config-row">
+        <label for="cablePairMode">Cable power pairs</label>
+        <select id="cablePairMode" aria-describedby="cablePairModeHint">
+          <option value="2-pair" selected>2-pair (802.3af / 802.3at)</option>
+          <option value="1-pair">1-pair</option>
+        </select>
+        <span id="cablePairModeHint" class="hint">Applies to all cables. 2-pair = lower loss.</span>
+      </div>
+      <div class="global-config-row">
+        <label for="cableSituation">Cable situation</label>
+        <select id="cableSituation" aria-describedby="cableSituationHint">
+          <option value="cool">Cool / light bundle (8–10 W at 100 m)</option>
+          <option value="typical" selected>Typical install (9–12 W at 100 m)</option>
+          <option value="warm">Warm bundle (12–14 W at 100 m)</option>
+          <option value="worst">Worst case spec limit (15–17 W at 100 m)</option>
+        </select>
+        <span id="cableSituationHint" class="hint">Temperature/bundling; applies to all cables.</span>
+      </div>
+    </section>
+
+    <section class="chain-section">
+      <h2>Device chain</h2>
+      <div id="chainContainer" class="chain-container">
+        <!-- PSE selector, switch, cables, devices injected by renderer -->
+      </div>
+      <div class="chain-actions">
+        <button type="button" id="addDevice" class="btn btn-primary">+ Add device</button>
+      </div>
+    </section>
+
+    <section class="results-section">
+      <h2>Power flow & margin</h2>
+      <div id="resultsTable" class="results-table">
+        <!-- Filled by renderer -->
+      </div>
+      <div id="summary" class="summary"></div>
+    </section>
+  </div>
+
+  <script src="calculator.js"></script>
+  <script src="renderer.js"></script>
+  <script>
+    (function () {
+      var el = document.getElementById('appVersion');
+      if (el && typeof window.electronAPI !== 'undefined' && window.electronAPI.appVersion) {
+        el.textContent = 'v' + window.electronAPI.appVersion;
+      }
+    })();
+  </script>
+</body>
+</html>

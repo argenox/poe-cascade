@@ -1,0 +1,29 @@
+# Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.
+
+# Dependencies
+node_modules/
+
+# Build / output
+dist/
+out/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Electron
+*.asar

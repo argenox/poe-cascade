@@ -1,0 +1,45 @@
+{
+  "name": "poe-cascade",
+  "version": "1.0.0",
+  "description": "POE cascade calculator - chain devices, cable losses, and power margin",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:mac": "electron-builder --mac"
+  },
+  "keywords": ["poe", "cascade", "ethernet", "power"],
+  "author": "Argenox Technologies LLC",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.",
+  "build": {
+    "appId": "com.poe-cascade.app",
+    "productName": "POE Cascade Calculator",
+    "directories": {
+      "output": "dist"
+    },
+    "files": ["**/*", "!**/*.md"],
+    "win": {
+      "target": ["nsis", "portable"]
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Utility"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "category": "public.app-category.utilities"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
