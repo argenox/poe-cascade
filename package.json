@@ -1,6 +1,6 @@
 {
   "name": "poe-cascade",
-  "version": "1.0.0",
+  "version": "0.1.13",
   "description": "POE cascade calculator - chain devices, cable losses, and power margin",
   "main": "main.js",
   "scripts": {
