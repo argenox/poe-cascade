@@ -97,7 +97,10 @@ jobs:
             dist/*.zip
 
   release:
-    if: github.ref_type == 'tag' && (needs.build.result == 'success' || needs.build.result == 'failure')
+    # Run on tag push (v*) or on push to main/master so binaries get published
+    if: |
+      (needs.build.result == 'success' || needs.build.result == 'failure') &&
+      (github.ref_type == 'tag' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     needs: [build]
     runs-on: ubuntu-latest
     permissions:
@@ -106,18 +109,31 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: 'cascade-poe-*-*'
+          pattern: 'cascade-poe-*'
           merge-multiple: true
           path: release
 
       - name: List downloaded artifacts
-        run: ls -la release/
+        run: |
+          ls -la release/
+          echo "---"
+          ls release/ || true
+
+      - name: Fail if no binaries
+        run: |
+          count=$(find release -type f 2>/dev/null | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No build artifacts found. Release would be empty."
+            exit 1
+          fi
+          echo "Found $count file(s) to upload"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          generate_release_notes: true
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'latest' }}
+          name: ${{ github.ref_type == 'tag' && format('Release {0}', github.ref_name) || 'Latest build' }}
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: ${{ github.ref_type == 'tag' }}
           files: release/*
           make_latest: true
