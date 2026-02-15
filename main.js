@@ -6,12 +6,15 @@ const path = require('path');
 const pkg = require('./package.json');
 const appTitle = `POE Cascade Calculator${pkg.version ? ` v${pkg.version}` : ''}`;
 
+const iconPath = path.join(__dirname, 'build', 'app_icon.png');
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 900,
     minHeight: 600,
+    icon: iconPath,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -23,7 +26,12 @@ function createWindow() {
   win.loadFile('index.html');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  if (process.platform === 'darwin' && app.dock && app.dock.setIcon) {
+    app.dock.setIcon(iconPath);
+  }
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
