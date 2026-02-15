@@ -9,7 +9,7 @@
     "build": "electron-builder",
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac"
+    "build:mac": "electron-builder --mac --x64 --arm64"
   },
   "keywords": ["poe", "cascade", "ethernet", "power"],
   "author": "Argenox Technologies LLC <info@argenox.com>",
@@ -34,8 +34,7 @@
     "mac": {
       "target": ["dmg", "zip"],
       "icon": "build/icon.icns",
-      "category": "public.app-category.utilities",
-      "arch": ["x64", "arm64"]
+      "category": "public.app-category.utilities"
     },
     "nsis": {
       "oneClick": false,
