@@ -4,8 +4,8 @@
   "description": "POE cascade calculator - chain devices, cable losses, and power margin",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "dev": "electron . --enable-logging",
+    "start": "electron . --no-sandbox",
+    "dev": "electron . --no-sandbox --enable-logging",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
