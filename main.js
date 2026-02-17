@@ -3,6 +3,11 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron');
 const path = require('path');
 
+// Avoid "SUID sandbox helper binary was not found" on Linux (common when running from npm install)
+if (process.platform === 'linux') {
+  app.commandLine.appendSwitch('no-sandbox');
+}
+
 const pkg = require('./package.json');
 const productName = pkg.build?.productName || pkg.name || 'POE Cascade Calculator';
 const appTitle = `${productName}${pkg.version ? ` v${pkg.version}` : ''}`;
