@@ -1,6 +1,6 @@
 {
   "name": "poe-cascade",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "POE cascade calculator - chain devices, cable losses, and power margin",
   "main": "main.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
     "build:mac": "electron-builder --mac --x64 --arm64",
+    "build:mac:unsigned": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --x64 --arm64",
     "test": "node --test test/"
   },
   "keywords": ["poe", "cascade", "ethernet", "power"],
@@ -23,6 +24,8 @@
       "output": "dist"
     },
     "files": ["**/*", "!**/*.md"],
+    "publish": null,
+    "artifactName": "POE-Cascade-Calculator-${version}-${os}-${arch}.${ext}",
     "win": {
       "target": ["nsis", "portable"],
       "icon": "build/icon.ico"
@@ -35,11 +38,14 @@
     "mac": {
       "target": ["dmg", "zip"],
       "icon": "build/icon.icns",
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "dmg": { "writeUpdateInfo": false },
+      "zip": { "writeUpdateInfo": false }
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "differentialPackage": false
     }
   },
   "devDependencies": {
