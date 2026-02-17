@@ -30,6 +30,173 @@ body {
   line-height: 1.5;
 }
 
+/* Skinned scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+::-webkit-scrollbar-corner {
+  background: var(--surface);
+}
+
+/* Custom title bar (Windows + macOS, when body has .platform-win32 or .platform-darwin) */
+.titlebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 9999;
+  align-items: center;
+  padding: 0 0 0 12px;
+  box-sizing: border-box;
+  opacity: 1;
+  transform: translateZ(0);
+}
+.titlebar-title {
+  -webkit-app-region: drag;
+}
+body.platform-win32 .titlebar,
+body.platform-darwin .titlebar {
+  display: flex;
+}
+body.platform-win32 .titlebar {
+  -webkit-app-region: drag;
+}
+body.platform-darwin .titlebar {
+  height: 38px;
+  padding-left: 72px;
+}
+.titlebar-title {
+  flex: 1;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+body.platform-darwin .titlebar-title {
+  text-align: center;
+  padding-right: 80px;
+}
+body.platform-darwin .titlebar-controls {
+  display: none;
+}
+.titlebar-controls {
+  display: flex;
+  -webkit-app-region: no-drag;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+body.platform-win32 .titlebar-controls {
+  gap: 10px;
+  margin-left: 2px;
+  padding: 4px 2px 4px 4px;
+}
+.titlebar-btn {
+  width: 46px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: var(--font);
+  line-height: 1;
+  padding: 0;
+  transition: background 0.1s, color 0.1s;
+  -webkit-app-region: no-drag;
+  flex-shrink: 0;
+}
+.titlebar-btn:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+.titlebar-btn.titlebar-close:hover {
+  background: var(--danger);
+  color: white;
+}
+.titlebar-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.12s ease;
+}
+body.platform-win32 .titlebar-btn-icon {
+  opacity: 1;
+  color: var(--text-muted);
+}
+body.platform-win32 .titlebar-controls .titlebar-minimize { order: 1; }
+body.platform-win32 .titlebar-controls .titlebar-maximize { order: 2; }
+body.platform-win32 .titlebar-controls .titlebar-close { order: 3; }
+body.platform-darwin .titlebar-btn {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  border-radius: 50%;
+  padding: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+body.platform-darwin .titlebar-btn-icon {
+  opacity: 0;
+  color: rgba(0, 0, 0, 0.55);
+}
+body.platform-darwin .titlebar-controls:hover .titlebar-btn-icon {
+  opacity: 1;
+  color: rgba(0, 0, 0, 0.75);
+}
+body.platform-darwin .titlebar-close {
+  background: #ff5f57;
+}
+body.platform-darwin .titlebar-close:hover {
+  background: #ff5f57;
+  filter: brightness(1.08);
+}
+body.platform-darwin .titlebar-minimize {
+  background: #febc2e;
+}
+body.platform-darwin .titlebar-minimize:hover {
+  background: #febc2e;
+  filter: brightness(1.08);
+}
+body.platform-darwin .titlebar-maximize {
+  background: #28c840;
+}
+body.platform-darwin .titlebar-maximize:hover {
+  background: #28c840;
+  filter: brightness(1.08);
+}
+body.platform-darwin .titlebar-controls .titlebar-close { order: 1; }
+body.platform-darwin .titlebar-controls .titlebar-minimize { order: 2; }
+body.platform-darwin .titlebar-controls .titlebar-maximize { order: 3; }
+body.platform-win32 .app,
+body.platform-darwin .app {
+  padding-top: 32px;
+}
+body.platform-darwin .app {
+  padding-top: 38px;
+}
+
 .app {
   width: 100%;
   min-width: 0;

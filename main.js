@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.
 
-const { app, BrowserWindow, Menu, dialog } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const path = require('path');
 
 // Avoid "SUID sandbox helper binary was not found" on Linux (common when running from npm install)
@@ -12,6 +12,8 @@ const pkg = require('./package.json');
 const productName = pkg.build?.productName || pkg.name || 'POE Cascade Calculator';
 const appTitle = `${productName}${pkg.version ? ` v${pkg.version}` : ''}`;
 const copyrightText = pkg.copyright || 'Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.';
+
+app.setName(productName);
 
 const iconPath = path.join(__dirname, 'build', 'app_icon.png');
 
@@ -58,12 +60,21 @@ function setApplicationMenu() {
 }
 
 function createWindow() {
+  const isWin = process.platform === 'win32';
+  const isMac = process.platform === 'darwin';
+  const frame = !isWin;
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 900,
     minHeight: 600,
     icon: iconPath,
+    frame,
+    ...(isMac ? {
+      titleBarStyle: 'hidden',
+      trafficLightPosition: { x: 14, y: 12 },
+    } : {}),
+    backgroundColor: '#0f1419',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -72,10 +83,31 @@ function createWindow() {
     title: appTitle,
   });
 
-  win.loadFile('index.html');
+  win.loadFile(path.join(__dirname, 'index.html'));
+
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.executeJavaScript(
+      'document.body && document.body.classList.add("platform-' + process.platform + '");'
+    ).catch(() => {});
+  });
 }
 
 app.whenReady().then(() => {
+  ipcMain.handle('windowMinimize', () => {
+    const w = BrowserWindow.getFocusedWindow();
+    if (w && !w.isDestroyed()) w.minimize();
+  });
+  ipcMain.handle('windowMaximize', () => {
+    const w = BrowserWindow.getFocusedWindow();
+    if (w && !w.isDestroyed()) {
+      if (w.isMaximized()) w.unmaximize(); else w.maximize();
+    }
+  });
+  ipcMain.handle('windowClose', () => {
+    const w = BrowserWindow.getFocusedWindow();
+    if (w && !w.isDestroyed()) w.close();
+  });
+
   if (process.platform === 'darwin' && app.dock && app.dock.setIcon) {
     app.dock.setIcon(iconPath);
   }

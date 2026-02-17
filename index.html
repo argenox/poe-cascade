@@ -9,6 +9,26 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="titlebar" id="titlebar" aria-hidden="true">
+    <span class="titlebar-title">POE Cascade Calculator</span>
+    <div class="titlebar-controls">
+      <button type="button" class="titlebar-btn titlebar-close" id="titlebarClose" aria-label="Close">
+        <span class="titlebar-btn-icon" aria-hidden="true">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><line x1="1" y1="1" x2="7" y2="7"/><line x1="7" y1="1" x2="1" y2="7"/></svg>
+        </span>
+      </button>
+      <button type="button" class="titlebar-btn titlebar-minimize" id="titlebarMinimize" aria-label="Minimize">
+        <span class="titlebar-btn-icon" aria-hidden="true">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><line x1="1" y1="4" x2="7" y2="4"/></svg>
+        </span>
+      </button>
+      <button type="button" class="titlebar-btn titlebar-maximize" id="titlebarMaximize" aria-label="Maximize">
+        <span class="titlebar-btn-icon" aria-hidden="true">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"><line x1="4" y1="1" x2="4" y2="7"/><line x1="1" y1="4" x2="7" y2="4"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
   <div class="app">
     <header class="header">
       <h1>POE Cascade Calculator</h1>

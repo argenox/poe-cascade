@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.
 
-const { contextBridge } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 const path = require('path');
 
 let appVersion = '0.1.10';
@@ -9,6 +9,12 @@ try {
   if (pkg && typeof pkg.version === 'string') appVersion = pkg.version;
 } catch (_) {}
 
+const platform = process.platform;
+
 contextBridge.exposeInMainWorld('electronAPI', {
   appVersion,
+  getPlatform: () => platform,
+  windowMinimize: () => ipcRenderer.invoke('windowMinimize'),
+  windowMaximize: () => ipcRenderer.invoke('windowMaximize'),
+  windowClose: () => ipcRenderer.invoke('windowClose'),
 });

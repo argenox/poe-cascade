@@ -1,6 +1,19 @@
 // Copyright (c) 2026 Argenox Technologies LLC. All rights reserved.
 
 (function () {
+  if (window.electronAPI && window.electronAPI.getPlatform) {
+    document.body.classList.add('platform-' + window.electronAPI.getPlatform());
+  }
+  document.addEventListener('mousedown', function (e) {
+    var btn = e.target.closest('.titlebar-controls .titlebar-btn');
+    if (!btn || !window.electronAPI) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (btn.id === 'titlebarClose') window.electronAPI.windowClose();
+    else if (btn.id === 'titlebarMinimize') window.electronAPI.windowMinimize();
+    else if (btn.id === 'titlebarMaximize') window.electronAPI.windowMaximize();
+  }, true);
+
   const CABLE_TYPES = window.POECalculator ? window.POECalculator.getCableTypes() : ['Cat5e', 'Cat6', 'Cat6a', 'Cat7'];
 
   const state = {
